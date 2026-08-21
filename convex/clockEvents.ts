@@ -2,8 +2,8 @@ import { mutation, query } from "./_generated/server";
 import type { QueryCtx, MutationCtx } from "./_generated/server";
 import type { Id } from "./_generated/dataModel";
 import { v } from "convex/values";
-import { requireEmployee } from "./lib/authz";
-import { businessDateOf, computeTotalHours } from "./lib/shiftDate";
+import { requireAdmin, requireEmployee } from "./lib/authz";
+import { businessDateOf, businessTimestamp, computeTotalHours } from "./lib/shiftDate";
 import { userError } from "./lib/errors";
 
 /** Every employee-submitted event needs a live-captured photo already sitting
@@ -122,6 +122,63 @@ export const clockOut = mutation({
     const totalHours = computeTotalHours(shiftEvents);
 
     return { eventId, timestamp, shiftDate, totalHours };
+  },
+});
+
+/** Epic 5 / PRD.md §6.5: admin records a punch on an employee's behalf —
+ * a forgotten clock-out, a broken phone, etc. Unlike the self-service
+ * flow, this deliberately skips the open/closed shift guard (it's a
+ * correction tool, not a live punch) and has no photo. The required
+ * reason note is stored in `auditNote`, the same field the day-detail
+ * audit trail already reads. */
+export const adminAddPunch = mutation({
+  args: {
+    token: v.string(),
+    employeeId: v.id("employees"),
+    type: v.union(v.literal("IN"), v.literal("OUT")),
+    date: v.string(), // "YYYY-MM-DD", business-local
+    time: v.string(), // "HH:MM", business-local
+    reason: v.string(),
+  },
+  returns: v.object({ eventId: v.id("clockEvents") }),
+  handler: async (ctx, args) => {
+    const admin = await requireAdmin(ctx, args.token);
+
+    const reason = args.reason.trim();
+    if (!reason) userError("A reason is required for a manual punch.");
+
+    const timestamp = businessTimestamp(args.date, args.time);
+
+    let shiftDate: string;
+    if (args.type === "IN") {
+      shiftDate = businessDateOf(timestamp);
+    } else {
+      // Inherit the shift_date of whatever IN preceded this timestamp, the
+      // same rule employee_self OUTs follow — this is what correctly closes
+      // an overnight or previously-forgotten shift instead of starting a new
+      // one. Falls back to this OUT's own date if there's no prior IN at all.
+      const priorIn = await ctx.db
+        .query("clockEvents")
+        .withIndex("by_employee_timestamp", (q) =>
+          q.eq("employeeId", args.employeeId).lt("timestamp", timestamp),
+        )
+        .order("desc")
+        .first();
+      shiftDate = priorIn && priorIn.type === "IN" ? priorIn.shiftDate : businessDateOf(timestamp);
+    }
+
+    const eventId = await ctx.db.insert("clockEvents", {
+      employeeId: args.employeeId,
+      type: args.type,
+      timestamp,
+      shiftDate,
+      source: "admin_manual",
+      createdBy: admin._id,
+      status: "on_time",
+      auditNote: reason,
+    });
+
+    return { eventId };
   },
 });
 

@@ -5,6 +5,7 @@ import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { useAuth } from "../hooks/useAuth";
 import { AdminNav } from "../components/AdminNav";
+import { ManualPunchModal } from "../components/ManualPunchModal";
 
 function formatTime(ts: number): string {
   return new Date(ts).toLocaleTimeString(undefined, {
@@ -32,6 +33,7 @@ export function AdminDayDetail() {
 
   const [noteDrafts, setNoteDrafts] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [showPunchModal, setShowPunchModal] = useState(false);
 
   async function handleSaveNote(eventId: Id<"clockEvents">, e: FormEvent) {
     e.preventDefault();
@@ -59,13 +61,35 @@ export function AdminDayDetail() {
           </Link>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
-          <h1 style={{ fontSize: "1.3rem", color: "var(--navy-900)" }}>
-            <span className="mono">{date}</span>
-          </h1>
-          {detail?.holidayName && <span className="pill pill-holiday">{detail.holidayName}</span>}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 4,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <h1 style={{ fontSize: "1.3rem", color: "var(--navy-900)" }}>
+              <span className="mono">{date}</span>
+            </h1>
+            {detail?.holidayName && <span className="pill pill-holiday">{detail.holidayName}</span>}
+          </div>
+          <button className="btn btn-secondary" onClick={() => setShowPunchModal(true)}>
+            + Add time in/out
+          </button>
         </div>
         <p style={{ color: "var(--ink-600)", marginBottom: 20 }}>{employee?.fullName}</p>
+
+        {showPunchModal && employeeId && date && (
+          <ManualPunchModal
+            employeeId={employeeId as Id<"employees">}
+            employeeName={employee?.fullName ?? "this employee"}
+            date={date}
+            onClose={() => setShowPunchModal(false)}
+            onSaved={() => setShowPunchModal(false)}
+          />
+        )}
 
         {detail === undefined && <p style={{ color: "var(--ink-600)" }}>Loading…</p>}
 

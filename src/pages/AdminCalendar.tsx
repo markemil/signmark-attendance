@@ -197,6 +197,7 @@ export function AdminCalendar() {
               const pill = pillFor(day.state);
               const dayNum = Number(day.date.slice(-2));
               const isTransparent = day.state === "blank";
+              const hasAdminEntry = day.events.some((e) => e.source === "admin_manual");
               const cell = (
                 <div
                   className={isTransparent ? undefined : "card"}
@@ -216,16 +217,32 @@ export function AdminCalendar() {
                     border: isTransparent ? "none" : undefined,
                   }}
                 >
-                  <span
-                    className="mono"
+                  <div
                     style={{
-                      fontSize: "0.72rem",
-                      fontWeight: 700,
-                      color: isTransparent ? "var(--ink-300)" : "var(--ink-600)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
                     }}
                   >
-                    {dayNum}
-                  </span>
+                    <span
+                      className="mono"
+                      style={{
+                        fontSize: "0.72rem",
+                        fontWeight: 700,
+                        color: isTransparent ? "var(--ink-300)" : "var(--ink-600)",
+                      }}
+                    >
+                      {dayNum}
+                    </span>
+                    {hasAdminEntry && (
+                      <span
+                        className="pill pill-admin"
+                        style={{ padding: "1px 6px", fontSize: "0.6rem" }}
+                      >
+                        A
+                      </span>
+                    )}
+                  </div>
                   {day.events.length > 0 && (
                     <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <div

@@ -15,6 +15,21 @@ export function businessDateOf(timestampMs: number): string {
 }
 
 /**
+ * Converts a business-local "YYYY-MM-DD" + "HH:MM" wall-clock time (what an
+ * admin picks in a date/time field) to a server epoch ms — the admin
+ * proxy-punch equivalent of businessDateOf's reverse direction. Unlike
+ * employee_self events, an admin_manual timestamp is legitimately
+ * client-chosen: the admin is recording when a punch actually happened,
+ * not asserting their own device clock (PRD.md §8's server-authoritative
+ * rule is specifically about not trusting an employee's own device).
+ */
+export function businessTimestamp(dateStr: string, timeStr: string): number {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  const [h, min] = timeStr.split(":").map(Number);
+  return Date.UTC(y, m - 1, d, h, min) - BUSINESS_UTC_OFFSET_MS;
+}
+
+/**
  * Sums the duration of every IN→OUT pair, pairing events in timestamp
  * order. An unmatched trailing IN (still open) contributes nothing yet —
  * hours land only once its OUT exists. Returns hours as a decimal.
