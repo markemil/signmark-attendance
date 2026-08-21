@@ -9,6 +9,9 @@ import { EmployeeHome } from "./pages/EmployeeHome";
 import { ClockCapture } from "./pages/ClockCapture";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { AdminNewEmployee } from "./pages/AdminNewEmployee";
+import { AdminHolidays } from "./pages/AdminHolidays";
+import { AdminCalendar } from "./pages/AdminCalendar";
+import { AdminDayDetail } from "./pages/AdminDayDetail";
 
 function RootRedirect() {
   const needsBootstrap = useQuery(api.auth.needsBootstrap);
@@ -57,6 +60,30 @@ function App() {
         element={
           <RequireRole role="admin">
             <AdminNewEmployee />
+          </RequireRole>
+        }
+      />
+      <Route
+        path="/admin/employees/:employeeId/calendar"
+        element={
+          <RequireRole role="admin">
+            <AdminCalendar />
+          </RequireRole>
+        }
+      />
+      <Route
+        path="/admin/employees/:employeeId/calendar/:date"
+        element={
+          <RequireRole role="admin">
+            <AdminDayDetail />
+          </RequireRole>
+        }
+      />
+      <Route
+        path="/admin/holidays"
+        element={
+          <RequireRole role="admin">
+            <AdminHolidays />
           </RequireRole>
         }
       />

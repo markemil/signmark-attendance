@@ -9,8 +9,10 @@
  */
 
 import type * as auth from "../auth.js";
+import type * as calendar from "../calendar.js";
 import type * as clockEvents from "../clockEvents.js";
 import type * as employees from "../employees.js";
+import type * as holidays from "../holidays.js";
 import type * as lib_authz from "../lib/authz.js";
 import type * as lib_errors from "../lib/errors.js";
 import type * as lib_password from "../lib/password.js";
@@ -24,8 +26,10 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  calendar: typeof calendar;
   clockEvents: typeof clockEvents;
   employees: typeof employees;
+  holidays: typeof holidays;
   "lib/authz": typeof lib_authz;
   "lib/errors": typeof lib_errors;
   "lib/password": typeof lib_password;

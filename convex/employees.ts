@@ -97,3 +97,31 @@ export const listEmployees = query({
     );
   },
 });
+
+export const getEmployee = query({
+  args: { token: v.string(), employeeId: v.id("employees") },
+  returns: v.union(
+    v.object({
+      _id: v.id("employees"),
+      fullName: v.string(),
+      employeeCode: v.string(),
+      department: v.string(),
+      position: v.string(),
+      profilePhotoUrl: v.union(v.string(), v.null()),
+    }),
+    v.null(),
+  ),
+  handler: async (ctx, args) => {
+    await requireAdmin(ctx, args.token);
+    const e = await ctx.db.get(args.employeeId);
+    if (!e) return null;
+    return {
+      _id: e._id,
+      fullName: e.fullName,
+      employeeCode: e.employeeCode,
+      department: e.department,
+      position: e.position,
+      profilePhotoUrl: await ctx.storage.getUrl(e.profilePhotoStorageId),
+    };
+  },
+});
