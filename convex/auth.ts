@@ -2,6 +2,7 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { hashPassword, verifyPassword, generateSessionToken } from "./lib/password";
 import { getSessionUser, SESSION_TTL_MS } from "./lib/authz";
+import { userError } from "./lib/errors";
 
 // True until the very first account exists — gates the one-time admin
 // bootstrap screen. PRD.md §10: exactly one initial Admin account, created
@@ -25,10 +26,10 @@ export const bootstrapAdmin = mutation({
   handler: async (ctx, args) => {
     const existing = await ctx.db.query("users").take(1);
     if (existing.length > 0) {
-      throw new Error("Setup has already run — an account already exists.");
+      userError("Setup has already run — an account already exists.");
     }
     if (args.password.length < 8) {
-      throw new Error("Password must be at least 8 characters.");
+      userError("Password must be at least 8 characters.");
     }
 
     const passwordHash = await hashPassword(args.password);

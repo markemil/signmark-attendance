@@ -2,6 +2,7 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { requireAdmin } from "./lib/authz";
 import { hashPassword } from "./lib/password";
+import { userError } from "./lib/errors";
 
 // Minimal upload plumbing Epic 1.2 needs to satisfy the required
 // profilePhotoStorageId field — Epic 2.1 covers the fuller upload UI.
@@ -36,10 +37,10 @@ export const createEmployee = mutation({
       .withIndex("by_username", (q) => q.eq("username", args.username))
       .unique();
     if (existingUsername) {
-      throw new Error(`Username "${args.username}" is already taken.`);
+      userError(`Username "${args.username}" is already taken.`);
     }
     if (args.password.length < 8) {
-      throw new Error("Password must be at least 8 characters.");
+      userError("Password must be at least 8 characters.");
     }
 
     const employeeId = await ctx.db.insert("employees", {

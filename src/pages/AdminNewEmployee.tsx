@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { useAuth } from "../hooks/useAuth";
+import { errorMessage } from "../lib/errorMessage";
 
 export function AdminNewEmployee() {
   const { token } = useAuth();
@@ -59,7 +60,7 @@ export function AdminNewEmployee() {
 
       navigate("/admin", { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't create this employee.");
+      setError(errorMessage(err, "Couldn't create this employee."));
     } finally {
       setSubmitting(false);
     }

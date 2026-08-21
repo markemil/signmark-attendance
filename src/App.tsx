@@ -6,6 +6,7 @@ import { RequireRole } from "./routes/RequireRole";
 import { Bootstrap } from "./pages/Bootstrap";
 import { Login } from "./pages/Login";
 import { EmployeeHome } from "./pages/EmployeeHome";
+import { ClockCapture } from "./pages/ClockCapture";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { AdminNewEmployee } from "./pages/AdminNewEmployee";
 
@@ -31,6 +32,14 @@ function App() {
         element={
           <RequireRole role="employee">
             <EmployeeHome />
+          </RequireRole>
+        }
+      />
+      <Route
+        path="/app/clock"
+        element={
+          <RequireRole role="employee">
+            <ClockCapture />
           </RequireRole>
         }
       />

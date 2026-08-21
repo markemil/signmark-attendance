@@ -3,6 +3,7 @@ import { useMutation } from "convex/react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../convex/_generated/api";
 import { useAuth } from "../hooks/useAuth";
+import { errorMessage } from "../lib/errorMessage";
 
 export function Bootstrap() {
   const bootstrapAdmin = useMutation(api.auth.bootstrapAdmin);
@@ -24,7 +25,7 @@ export function Bootstrap() {
       setToken(token);
       navigate("/admin", { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Couldn't create the admin account.");
+      setError(errorMessage(err, "Couldn't create the admin account."));
     } finally {
       setSubmitting(false);
     }
