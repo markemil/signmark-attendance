@@ -12,15 +12,8 @@ export function AdminDashboard() {
     <main className="page-desktop" style={{ flexDirection: "column" }}>
       <AdminNav />
 
-      <div style={{ padding: "28px 36px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            marginBottom: "var(--space-4)",
-          }}
-        >
+      <div className="admin-content">
+        <div className="header-row" style={{ marginBottom: "var(--space-4)" }}>
           <div>
             <h1 style={{ fontSize: "1.5rem", color: "var(--navy-900)" }}>Dashboard</h1>
             <p style={{ color: "var(--ink-600)", marginTop: 4 }}>
@@ -64,17 +57,14 @@ export function AdminDashboard() {
             <Link
               key={emp._id}
               to={`/admin/employees/${emp._id}/calendar`}
+              className="table-row-3"
               style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr",
-                alignItems: "center",
                 padding: "13px 20px",
                 borderBottom: "1px solid var(--ink-300)",
-                gap: 12,
                 color: "inherit",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                 {emp.profilePhotoUrl ? (
                   <img
                     src={emp.profilePhotoUrl}
@@ -85,6 +75,7 @@ export function AdminDashboard() {
                       borderRadius: "50%",
                       objectFit: "cover",
                       border: "1px solid var(--ink-300)",
+                      flex: "none",
                     }}
                   />
                 ) : (
@@ -94,17 +85,29 @@ export function AdminDashboard() {
                       height: 32,
                       borderRadius: "50%",
                       background: "var(--blue-100)",
+                      flex: "none",
                     }}
                   />
                 )}
-                <div>
-                  <div style={{ fontWeight: 600 }}>{emp.fullName}</div>
+                <div style={{ minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontWeight: 600,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {emp.fullName}
+                  </div>
                   <div className="mono" style={{ fontSize: "0.72rem", color: "var(--ink-600)" }}>
                     {emp.employeeCode}
                   </div>
                 </div>
               </div>
-              <div style={{ color: "var(--ink-600)" }}>{emp.department}</div>
+              <div className="table-col-secondary" style={{ color: "var(--ink-600)" }}>
+                {emp.department}
+              </div>
               <div>
                 <span
                   className={emp.status === "active" ? "pill pill-success" : "pill pill-warning"}

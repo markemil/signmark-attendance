@@ -94,6 +94,7 @@ export function ExportModal({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        padding: 16,
         zIndex: 50,
       }}
       onClick={onClose}
@@ -104,6 +105,8 @@ export function ExportModal({
         style={{
           width: "100%",
           maxWidth: 460,
+          maxHeight: "calc(100vh - 32px)",
+          overflowY: "auto",
           padding: 26,
           display: "flex",
           flexDirection: "column",

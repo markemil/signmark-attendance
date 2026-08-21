@@ -100,7 +100,7 @@ export function AdminNewEmployee() {
           />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+        <div className="field-grid-2">
           <div className="field">
             <label className="label" htmlFor="employeeCode">
               Employee code
@@ -128,7 +128,7 @@ export function AdminNewEmployee() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+        <div className="field-grid-2">
           <div className="field">
             <label className="label" htmlFor="department">
               Department
@@ -182,7 +182,7 @@ export function AdminNewEmployee() {
         </div>
 
         <div style={{ borderTop: "1px solid var(--ink-300)", paddingTop: "var(--space-3)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-3)" }}>
+          <div className="field-grid-2">
             <div className="field">
               <label className="label" htmlFor="username">
                 Username

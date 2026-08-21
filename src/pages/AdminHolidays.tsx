@@ -66,15 +66,8 @@ export function AdminHolidays() {
     <main className="page-desktop" style={{ flexDirection: "column" }}>
       <AdminNav />
 
-      <div style={{ padding: "28px 36px" }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            marginBottom: 8,
-          }}
-        >
+      <div className="admin-content">
+        <div className="header-row" style={{ marginBottom: 8 }}>
           <div>
             <h1 style={{ fontSize: "1.4rem", color: "var(--navy-900)" }}>Holidays</h1>
             <p style={{ color: "var(--ink-600)", marginTop: 4, maxWidth: 520 }}>
@@ -103,7 +96,7 @@ export function AdminHolidays() {
             <h2 style={{ fontSize: "0.95rem" }}>
               {editingId === "new" ? "Add holiday" : "Edit holiday"}
             </h2>
-            <div style={{ display: "flex", gap: 12 }}>
+            <div className="stack-on-narrow">
               <div className="field" style={{ flex: 1 }}>
                 <label className="label" htmlFor="holiday-date">
                   Date
@@ -151,7 +144,7 @@ export function AdminHolidays() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "140px 1fr 90px",
+              gridTemplateColumns: "100px 1fr auto",
               padding: "10px 20px",
               fontSize: "0.72rem",
               fontWeight: 700,
@@ -180,16 +173,28 @@ export function AdminHolidays() {
               key={h._id}
               style={{
                 display: "grid",
-                gridTemplateColumns: "140px 1fr 90px",
+                gridTemplateColumns: "100px 1fr auto",
                 alignItems: "center",
+                gap: 8,
                 padding: "13px 20px",
                 borderTop: "1px solid var(--ink-300)",
               }}
             >
-              <div className="mono" style={{ color: "var(--ink-600)" }}>
+              <div className="mono" style={{ color: "var(--ink-600)", fontSize: "0.85rem" }}>
                 {h.date}
               </div>
-              <div style={{ fontWeight: 600 }}>{h.name}</div>
+              <div
+                style={{
+                  fontWeight: 600,
+                  minWidth: 0,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+                title={h.name}
+              >
+                {h.name}
+              </div>
               <div style={{ display: "flex", gap: 6, justifyContent: "flex-end" }}>
                 <button className="btn btn-ghost" onClick={() => startEdit(h)}>
                   Edit

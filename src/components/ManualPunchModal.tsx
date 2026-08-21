@@ -57,6 +57,7 @@ export function ManualPunchModal({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        padding: 16,
         zIndex: 50,
       }}
       onClick={onClose}
@@ -68,6 +69,8 @@ export function ManualPunchModal({
         style={{
           width: "100%",
           maxWidth: 440,
+          maxHeight: "calc(100vh - 32px)",
+          overflowY: "auto",
           padding: 26,
           display: "flex",
           flexDirection: "column",

@@ -51,7 +51,7 @@ export function AdminDayDetail() {
     <main className="page-desktop" style={{ flexDirection: "column" }}>
       <AdminNav />
 
-      <div style={{ padding: "28px 36px", maxWidth: 900 }}>
+      <div className="admin-content" style={{ maxWidth: 900 }}>
         <div style={{ marginBottom: 16 }}>
           <Link
             to={`/admin/employees/${employeeId}/calendar`}
@@ -61,15 +61,8 @@ export function AdminDayDetail() {
           </Link>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 4,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="header-row" style={{ marginBottom: 4 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
             <h1 style={{ fontSize: "1.3rem", color: "var(--navy-900)" }}>
               <span className="mono">{date}</span>
             </h1>
@@ -134,7 +127,7 @@ export function AdminDayDetail() {
                 </span>
               </div>
 
-              <div style={{ display: "flex", gap: 16 }}>
+              <div className="stack-on-narrow">
                 {event.photoUrl ? (
                   <img
                     src={event.photoUrl}

@@ -114,6 +114,10 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Backstop per DESIGN.md §4 — the page shell never scrolls sideways;
+     wide content (tables, calendars) scrolls in its own container
+     instead (see .scroll-x in components.css). */
+  overflow-x: hidden;
 }
 
 h1,

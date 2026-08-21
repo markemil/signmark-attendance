@@ -100,21 +100,14 @@ export function AdminCalendar() {
     <main className="page-desktop" style={{ flexDirection: "column" }}>
       <AdminNav />
 
-      <div style={{ padding: "28px 36px" }}>
+      <div className="admin-content">
         <div style={{ marginBottom: 8 }}>
           <Link to="/admin" style={{ fontSize: "0.85rem", color: "var(--ink-600)" }}>
             ← Back to Dashboard
           </Link>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 20,
-          }}
-        >
+        <div className="header-row" style={{ marginBottom: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
             {employee?.profilePhotoUrl ? (
               <img
@@ -148,23 +141,25 @@ export function AdminCalendar() {
             </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <button className="btn btn-ghost" onClick={prevMonth} aria-label="Previous month">
-              ←
-            </button>
-            <span
-              style={{
-                fontWeight: 700,
-                color: "var(--navy-900)",
-                minWidth: 150,
-                textAlign: "center",
-              }}
-            >
-              {MONTH_NAMES[month - 1]} {year}
-            </span>
-            <button className="btn btn-ghost" onClick={nextMonth} aria-label="Next month">
-              →
-            </button>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
+              <button className="btn btn-ghost" onClick={prevMonth} aria-label="Previous month">
+                ←
+              </button>
+              <span
+                style={{
+                  fontWeight: 700,
+                  color: "var(--navy-900)",
+                  minWidth: 130,
+                  textAlign: "center",
+                }}
+              >
+                {MONTH_NAMES[month - 1]} {year}
+              </span>
+              <button className="btn btn-ghost" onClick={nextMonth} aria-label="Next month">
+                →
+              </button>
+            </div>
             <button className="btn btn-primary" onClick={() => setShowExport(true)}>
               Export
             </button>
@@ -181,120 +176,128 @@ export function AdminCalendar() {
           />
         )}
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(7, 1fr)",
-            gap: 10,
-            marginBottom: 8,
-          }}
-        >
-          {WEEKDAYS.map((w) => (
+        {/* DESIGN.md §4: the calendar scrolls horizontally in its own
+            container on narrow screens rather than squishing 7 columns
+            into unreadable cells — the page body itself never scrolls
+            sideways (see body { overflow-x: hidden } in theme.css). */}
+        <div className="scroll-x">
+          <div style={{ minWidth: 700 }}>
             <div
-              key={w}
-              className="mono"
-              style={{ fontSize: "0.7rem", color: "var(--ink-600)", textAlign: "center" }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(7, 1fr)",
+                gap: 10,
+                marginBottom: 8,
+              }}
             >
-              {w}
-            </div>
-          ))}
-        </div>
-
-        {calendar === undefined ? (
-          <p style={{ color: "var(--ink-600)" }}>Loading…</p>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 10 }}>
-            {Array.from({ length: leadingBlanks }).map((_, i) => (
-              <div key={`lead-${i}`} />
-            ))}
-
-            {calendar.map((day) => {
-              const pill = pillFor(day.state);
-              const dayNum = Number(day.date.slice(-2));
-              const isTransparent = day.state === "blank";
-              const hasAdminEntry = day.events.some((e) => e.source === "admin_manual");
-              const cell = (
+              {WEEKDAYS.map((w) => (
                 <div
-                  className={isTransparent ? undefined : "card"}
-                  style={{
-                    minHeight: 92,
-                    padding: 8,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 5,
-                    background: isTransparent
-                      ? "transparent"
-                      : day.state === "holiday" || day.state === "holiday_worked"
-                        ? "var(--blue-100)"
-                        : day.state === "absent"
-                          ? "var(--critical-bg)"
-                          : undefined,
-                    border: isTransparent ? "none" : undefined,
-                  }}
+                  key={w}
+                  className="mono"
+                  style={{ fontSize: "0.7rem", color: "var(--ink-600)", textAlign: "center" }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <span
-                      className="mono"
+                  {w}
+                </div>
+              ))}
+            </div>
+
+            {calendar === undefined ? (
+              <p style={{ color: "var(--ink-600)" }}>Loading…</p>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 10 }}>
+                {Array.from({ length: leadingBlanks }).map((_, i) => (
+                  <div key={`lead-${i}`} />
+                ))}
+
+                {calendar.map((day) => {
+                  const pill = pillFor(day.state);
+                  const dayNum = Number(day.date.slice(-2));
+                  const isTransparent = day.state === "blank";
+                  const hasAdminEntry = day.events.some((e) => e.source === "admin_manual");
+                  const cell = (
+                    <div
+                      className={isTransparent ? undefined : "card"}
                       style={{
-                        fontSize: "0.72rem",
-                        fontWeight: 700,
-                        color: isTransparent ? "var(--ink-300)" : "var(--ink-600)",
+                        minHeight: 92,
+                        padding: 8,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 5,
+                        background: isTransparent
+                          ? "transparent"
+                          : day.state === "holiday" || day.state === "holiday_worked"
+                            ? "var(--blue-100)"
+                            : day.state === "absent"
+                              ? "var(--critical-bg)"
+                              : undefined,
+                        border: isTransparent ? "none" : undefined,
                       }}
                     >
-                      {dayNum}
-                    </span>
-                    {hasAdminEntry && (
-                      <span
-                        className="pill pill-admin"
-                        style={{ padding: "1px 6px", fontSize: "0.6rem" }}
-                      >
-                        A
-                      </span>
-                    )}
-                  </div>
-                  {day.events.length > 0 && (
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <div
                         style={{
-                          width: 20,
-                          height: 20,
-                          borderRadius: 5,
-                          background: "var(--blue-100)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
                         }}
-                      />
-                      <span className="mono" style={{ fontSize: "0.65rem" }}>
-                        {formatTime(day.events[0].timestamp)}
-                      </span>
+                      >
+                        <span
+                          className="mono"
+                          style={{
+                            fontSize: "0.72rem",
+                            fontWeight: 700,
+                            color: isTransparent ? "var(--ink-300)" : "var(--ink-600)",
+                          }}
+                        >
+                          {dayNum}
+                        </span>
+                        {hasAdminEntry && (
+                          <span
+                            className="pill pill-admin"
+                            style={{ padding: "1px 6px", fontSize: "0.6rem" }}
+                          >
+                            A
+                          </span>
+                        )}
+                      </div>
+                      {day.events.length > 0 && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                          <div
+                            style={{
+                              width: 20,
+                              height: 20,
+                              borderRadius: 5,
+                              background: "var(--blue-100)",
+                            }}
+                          />
+                          <span className="mono" style={{ fontSize: "0.65rem" }}>
+                            {formatTime(day.events[0].timestamp)}
+                          </span>
+                        </div>
+                      )}
+                      {pill && (
+                        <span className={pill.className} style={{ marginTop: "auto" }}>
+                          {pill.label}
+                        </span>
+                      )}
                     </div>
-                  )}
-                  {pill && (
-                    <span className={pill.className} style={{ marginTop: "auto" }}>
-                      {pill.label}
-                    </span>
-                  )}
-                </div>
-              );
+                  );
 
-              if (isTransparent) return <div key={day.date}>{cell}</div>;
+                  if (isTransparent) return <div key={day.date}>{cell}</div>;
 
-              return (
-                <Link
-                  key={day.date}
-                  to={`/admin/employees/${employeeId}/calendar/${day.date}`}
-                  style={{ color: "inherit", textDecoration: "none" }}
-                >
-                  {cell}
-                </Link>
-              );
-            })}
+                  return (
+                    <Link
+                      key={day.date}
+                      to={`/admin/employees/${employeeId}/calendar/${day.date}`}
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      {cell}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         <div
           className="card"
