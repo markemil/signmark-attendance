@@ -38,15 +38,20 @@ export const getExportRows = internalQuery({
     const employee = await ctx.db.get(args.employeeId);
     if (!employee) throw new Error("Employee not found.");
 
-    const events = await ctx.db
-      .query("clockEvents")
-      .withIndex("by_employee_shiftDate", (q) =>
-        q
-          .eq("employeeId", args.employeeId)
-          .gte("shiftDate", args.periodStart)
-          .lte("shiftDate", args.periodEnd),
-      )
-      .collect();
+    // Voided events (calendar.ts voidEvent) are excluded — same rule as the
+    // calendar view, which is what keeps an export's hours matching the
+    // calendar exactly even after a correction.
+    const events = (
+      await ctx.db
+        .query("clockEvents")
+        .withIndex("by_employee_shiftDate", (q) =>
+          q
+            .eq("employeeId", args.employeeId)
+            .gte("shiftDate", args.periodStart)
+            .lte("shiftDate", args.periodEnd),
+        )
+        .collect()
+    ).filter((e) => !e.voidedAt);
 
     const eventsByDate = new Map<string, typeof events>();
     for (const e of events) {

@@ -36,12 +36,19 @@ async function attachPhoto(
   });
 }
 
+// Voided events (see calendar.ts voidEvent) are skipped here — a voided
+// punch is treated as if it never happened for open/closed-shift purposes,
+// e.g. voiding a duplicate accidental IN lets the employee clock in again
+// correctly. Bounded take(): voiding is expected to be a rare correction,
+// not the common case, so scanning the last 20 is more than enough in
+// practice without an unbounded collect().
 async function mostRecentEvent(ctx: QueryCtx | MutationCtx, employeeId: Id<"employees">) {
-  return ctx.db
+  const recent = await ctx.db
     .query("clockEvents")
     .withIndex("by_employee_timestamp", (q) => q.eq("employeeId", employeeId))
     .order("desc")
-    .first();
+    .take(20);
+  return recent.find((e) => !e.voidedAt) ?? null;
 }
 
 export const clockIn = mutation({
@@ -113,12 +120,14 @@ export const clockOut = mutation({
     const photoId = await attachPhoto(ctx, args.photoStorageId, eventId);
     await ctx.db.patch(eventId, { photoId });
 
-    const shiftEvents = await ctx.db
-      .query("clockEvents")
-      .withIndex("by_employee_shiftDate", (q) =>
-        q.eq("employeeId", employeeId).eq("shiftDate", shiftDate),
-      )
-      .collect();
+    const shiftEvents = (
+      await ctx.db
+        .query("clockEvents")
+        .withIndex("by_employee_shiftDate", (q) =>
+          q.eq("employeeId", employeeId).eq("shiftDate", shiftDate),
+        )
+        .collect()
+    ).filter((e) => !e.voidedAt);
     const totalHours = computeTotalHours(shiftEvents);
 
     return { eventId, timestamp, shiftDate, totalHours };
@@ -157,13 +166,14 @@ export const adminAddPunch = mutation({
       // same rule employee_self OUTs follow — this is what correctly closes
       // an overnight or previously-forgotten shift instead of starting a new
       // one. Falls back to this OUT's own date if there's no prior IN at all.
-      const priorIn = await ctx.db
+      const priorEvents = await ctx.db
         .query("clockEvents")
         .withIndex("by_employee_timestamp", (q) =>
           q.eq("employeeId", args.employeeId).lt("timestamp", timestamp),
         )
         .order("desc")
-        .first();
+        .take(20);
+      const priorIn = priorEvents.find((e) => !e.voidedAt) ?? null;
       shiftDate = priorIn && priorIn.type === "IN" ? priorIn.shiftDate : businessDateOf(timestamp);
     }
 
@@ -209,12 +219,14 @@ export const myStatus = query({
     const openIn = last && last.type === "IN" ? last : null;
     const shiftDate = openIn ? openIn.shiftDate : businessDateOf(Date.now());
 
-    const events = await ctx.db
-      .query("clockEvents")
-      .withIndex("by_employee_shiftDate", (q) =>
-        q.eq("employeeId", employeeId).eq("shiftDate", shiftDate),
-      )
-      .collect();
+    const events = (
+      await ctx.db
+        .query("clockEvents")
+        .withIndex("by_employee_shiftDate", (q) =>
+          q.eq("employeeId", employeeId).eq("shiftDate", shiftDate),
+        )
+        .collect()
+    ).filter((e) => !e.voidedAt);
     events.sort((a, b) => a.timestamp - b.timestamp);
 
     return {

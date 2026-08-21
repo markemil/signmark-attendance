@@ -42,6 +42,13 @@ export default defineSchema({
     auditNote: v.optional(v.string()), // required if source = admin_manual, enforced in mutation
     editedBy: v.optional(v.id("users")),
     editedAt: v.optional(v.number()),
+    // Void, don't delete: a voided event stays in the record (who, when,
+    // why) but drops out of hours/calendar-state/exports — see
+    // convex/calendar.ts voidEvent. Never hard-deleted, so the audit trail
+    // always shows a punch actually happened even if it was wrong.
+    voidedAt: v.optional(v.number()),
+    voidedBy: v.optional(v.id("users")),
+    voidReason: v.optional(v.string()),
   })
     .index("by_employee_shiftDate", ["employeeId", "shiftDate"])
     .index("by_employee_timestamp", ["employeeId", "timestamp"]),

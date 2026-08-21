@@ -3,6 +3,7 @@ import { v } from "convex/values";
 import { requireAdmin } from "./lib/authz";
 import { businessDateOf } from "./lib/shiftDate";
 import { rollupDays } from "./lib/dayRollup";
+import { userError } from "./lib/errors";
 
 function daysInMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month, 0)).getUTCDate();
@@ -53,12 +54,20 @@ export const getEmployeeCalendar = query({
     const monthEnd = `${args.year}-${pad2(args.month)}-${pad2(lastDay)}`;
     const today = businessDateOf(Date.now());
 
-    const events = await ctx.db
-      .query("clockEvents")
-      .withIndex("by_employee_shiftDate", (q) =>
-        q.eq("employeeId", args.employeeId).gte("shiftDate", monthStart).lte("shiftDate", monthEnd),
-      )
-      .collect();
+    // Voided events are excluded here (and from every hours/state
+    // computation) but never deleted — see voidEvent below and
+    // getDayDetail, which still lists them for the audit trail.
+    const events = (
+      await ctx.db
+        .query("clockEvents")
+        .withIndex("by_employee_shiftDate", (q) =>
+          q
+            .eq("employeeId", args.employeeId)
+            .gte("shiftDate", monthStart)
+            .lte("shiftDate", monthEnd),
+        )
+        .collect()
+    ).filter((e) => !e.voidedAt);
 
     const eventsByDate = new Map<string, typeof events>();
     for (const e of events) {
@@ -112,6 +121,8 @@ export const getDayDetail = query({
         auditNote: v.optional(v.string()),
         editedAt: v.optional(v.number()),
         photoUrl: v.union(v.string(), v.null()),
+        voided: v.boolean(),
+        voidReason: v.optional(v.string()),
       }),
     ),
   }),
@@ -148,6 +159,8 @@ export const getDayDetail = query({
           auditNote: e.auditNote,
           editedAt: e.editedAt,
           photoUrl,
+          voided: !!e.voidedAt,
+          voidReason: e.voidReason,
         };
       }),
     );
@@ -168,6 +181,41 @@ export const setAuditNote = mutation({
       auditNote: args.note,
       editedBy: admin._id,
       editedAt: Date.now(),
+    });
+    return null;
+  },
+});
+
+/** Voids a wrong/duplicate punch — the record stays (who voided it, when,
+ * why), it just drops out of hours/calendar-state/exports from here on.
+ * Never a hard delete: PRD.md's trust principle means a punch that
+ * happened (even mistakenly) should never be erasable without a trace. */
+export const voidEvent = mutation({
+  args: { token: v.string(), eventId: v.id("clockEvents"), reason: v.string() },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const admin = await requireAdmin(ctx, args.token);
+    const reason = args.reason.trim();
+    if (!reason) userError("A reason is required to void a punch.");
+
+    await ctx.db.patch(args.eventId, {
+      voidedAt: Date.now(),
+      voidedBy: admin._id,
+      voidReason: reason,
+    });
+    return null;
+  },
+});
+
+export const unvoidEvent = mutation({
+  args: { token: v.string(), eventId: v.id("clockEvents") },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    await requireAdmin(ctx, args.token);
+    await ctx.db.patch(args.eventId, {
+      voidedAt: undefined,
+      voidedBy: undefined,
+      voidReason: undefined,
     });
     return null;
   },

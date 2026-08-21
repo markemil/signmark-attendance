@@ -15,7 +15,7 @@ This plan walks that pipeline for **In-Out** specifically, using [`PRD.md`](./PR
 | 5   | Linear issues           | Backlog below                                                                            | ✅ Drafted, ready to import                                                                                                                                                                                                                                                          |
 | 6   | Implementation          | React/TS/Vite/Convex app                                                                 | ✅ All MVP epics (0–7) done and verified — full PRD.md §9 MVP scope built                                                                                                                                                                                                            |
 | 7   | Review & test           | —                                                                                        | ⬜                                                                                                                                                                                                                                                                                   |
-| 8   | Design verification     | —                                                                                        | ⬜ Mobile responsiveness pass done at 390px/768px for all admin pages (previously untested) — see notes below                                                                                                                                                                       |
+| 8   | Design verification     | —                                                                                        | ⬜ Mobile responsiveness pass done at 390px/768px for all admin pages (previously untested) — see notes below                                                                                                                                                                        |
 | 9   | Version & deploy        | GitHub + Cloudflare Pages + Convex                                                       | ⬜ Live at [signmark-attendance.pages.dev](https://signmark-attendance.pages.dev), auto-deploying from [GitHub](https://github.com/markemil/signmark-attendance) on push to `main`, verified working end-to-end — still points at Convex **dev** deployment, not a separate prod one |
 | 10  | Production verification | —                                                                                        | ⬜                                                                                                                                                                                                                                                                                   |
 
@@ -176,6 +176,12 @@ Organized as epics matching the MVP feature list in `PRD.md` §5/§9. Each issue
 - AC: full-size photos, exact timestamps, device info, status; admin can add an audit note or correct a record without deleting the original.
 - Depends on: 4.1
 - DoD: an edited record still shows its original values in an audit trail.
+
+**4.3 Void a punch (added 2026-08-21)**
+
+- AC: admin can void a wrong/duplicate punch with a required reason. Voiding never deletes the row — it stays visible in Day Detail (dimmed, struck-through, tagged "Voided" with the reason) but drops out of hours, calendar day-state, and exports as if it hadn't happened. Reversible via "Unvoid".
+- Depends on: 4.2
+- DoD: voiding the only punch on a day flips that day's calendar state back to Absent (or Holiday, if applicable); voiding a duplicate accidental IN lets the employee clock in again without hitting the "already clocked in" guard; export hours for the period match the post-void calendar exactly.
 
 ### Epic 5 — Admin Proxy Punch
 

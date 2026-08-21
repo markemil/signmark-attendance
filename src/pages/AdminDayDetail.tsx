@@ -30,10 +30,16 @@ export function AdminDayDetail() {
       : "skip",
   );
   const setAuditNote = useMutation(api.calendar.setAuditNote);
+  const voidEvent = useMutation(api.calendar.voidEvent);
+  const unvoidEvent = useMutation(api.calendar.unvoidEvent);
 
   const [noteDrafts, setNoteDrafts] = useState<Record<string, string>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
   const [showPunchModal, setShowPunchModal] = useState(false);
+  const [voidingId, setVoidingId] = useState<string | null>(null);
+  const [voidReasonDrafts, setVoidReasonDrafts] = useState<Record<string, string>>({});
+  const [voidError, setVoidError] = useState<string | null>(null);
+  const [voidBusyId, setVoidBusyId] = useState<string | null>(null);
 
   async function handleSaveNote(eventId: Id<"clockEvents">, e: FormEvent) {
     e.preventDefault();
@@ -44,6 +50,33 @@ export function AdminDayDetail() {
       await setAuditNote({ token, eventId, note });
     } finally {
       setSavingId(null);
+    }
+  }
+
+  async function handleConfirmVoid(eventId: Id<"clockEvents">) {
+    if (!token) return;
+    const reason = (voidReasonDrafts[eventId] ?? "").trim();
+    if (!reason) {
+      setVoidError("A reason is required to void a punch.");
+      return;
+    }
+    setVoidError(null);
+    setVoidBusyId(eventId);
+    try {
+      await voidEvent({ token, eventId, reason });
+      setVoidingId(null);
+    } finally {
+      setVoidBusyId(null);
+    }
+  }
+
+  async function handleUnvoid(eventId: Id<"clockEvents">) {
+    if (!token) return;
+    setVoidBusyId(eventId);
+    try {
+      await unvoidEvent({ token, eventId });
+    } finally {
+      setVoidBusyId(null);
     }
   }
 
@@ -94,16 +127,22 @@ export function AdminDayDetail() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {detail?.events.map((event) => (
-            <div key={event._id} className="card" style={{ padding: 20 }}>
+            <div
+              key={event._id}
+              className="card"
+              style={{ padding: 20, opacity: event.voided ? 0.6 : 1 }}
+            >
               <div
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
                   marginBottom: 14,
+                  flexWrap: "wrap",
+                  gap: 8,
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
                   <span
                     className="pill"
                     style={{ background: "var(--blue-100)", color: "var(--blue-700)" }}
@@ -113,19 +152,107 @@ export function AdminDayDetail() {
                   {event.source === "admin_manual" && (
                     <span className="pill pill-admin">Admin-entered</span>
                   )}
+                  {event.voided && <span className="pill pill-critical-filled">Voided</span>}
                 </div>
-                <span
-                  className={
-                    event.status === "on_time"
-                      ? "pill pill-success"
-                      : event.status === "late"
-                        ? "pill pill-warning"
-                        : "pill pill-critical-filled"
-                  }
-                >
-                  {event.status === "on_time" ? "On time" : event.status}
-                </span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span
+                    className={
+                      event.status === "on_time"
+                        ? "pill pill-success"
+                        : event.status === "late"
+                          ? "pill pill-warning"
+                          : "pill pill-critical-filled"
+                    }
+                  >
+                    {event.status === "on_time" ? "On time" : event.status}
+                  </span>
+                  {event.voided ? (
+                    <button
+                      className="btn btn-ghost"
+                      onClick={() => handleUnvoid(event._id)}
+                      disabled={voidBusyId === event._id}
+                    >
+                      {voidBusyId === event._id ? "Restoring…" : "Unvoid"}
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-ghost"
+                      style={{ color: "var(--critical)" }}
+                      onClick={() => {
+                        setVoidingId(event._id);
+                        setVoidError(null);
+                      }}
+                    >
+                      Void
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {event.voided && event.voidReason && (
+                <p
+                  style={{
+                    fontSize: "0.82rem",
+                    color: "var(--critical)",
+                    background: "var(--critical-bg)",
+                    padding: "8px 12px",
+                    borderRadius: "var(--radius-md)",
+                    marginBottom: 14,
+                  }}
+                >
+                  <strong>Voided:</strong> {event.voidReason}
+                </p>
+              )}
+
+              {voidingId === event._id && (
+                <div
+                  className="card"
+                  style={{
+                    padding: 14,
+                    marginBottom: 14,
+                    background: "var(--sky-050)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 10,
+                  }}
+                >
+                  <label className="label" htmlFor={`void-reason-${event._id}`}>
+                    Reason for voiding <span style={{ color: "var(--critical)" }}>*</span>
+                  </label>
+                  <textarea
+                    id={`void-reason-${event._id}`}
+                    className="input"
+                    rows={2}
+                    style={{ resize: "none" }}
+                    placeholder='e.g. "Accidental duplicate clock-in."'
+                    onChange={(e) =>
+                      setVoidReasonDrafts((prev) => ({ ...prev, [event._id]: e.target.value }))
+                    }
+                  />
+                  {voidError && <p className="error-text">{voidError}</p>}
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        setVoidingId(null);
+                        setVoidError(null);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      style={{ background: "var(--critical)" }}
+                      onClick={() => handleConfirmVoid(event._id)}
+                      disabled={voidBusyId === event._id}
+                    >
+                      {voidBusyId === event._id ? "Voiding…" : "Confirm void"}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="stack-on-narrow">
                 {event.photoUrl ? (
@@ -172,7 +299,12 @@ export function AdminDayDetail() {
                 >
                   <div
                     className="mono"
-                    style={{ fontSize: "1.4rem", fontWeight: 500, color: "var(--navy-900)" }}
+                    style={{
+                      fontSize: "1.4rem",
+                      fontWeight: 500,
+                      color: "var(--navy-900)",
+                      textDecoration: event.voided ? "line-through" : undefined,
+                    }}
                   >
                     {formatTime(event.timestamp)}
                   </div>

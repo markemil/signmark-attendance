@@ -100,6 +100,7 @@ Same capture flow as above, tagged **OUT**, closing the employee's currently ope
    - _(blank)_ — a future date that hasn't occurred yet.
 4. Clicks a day to open the detail view: full photos, exact timestamps, device used.
 5. Admin can add an audit note or correct a record; the original entry remains visible in the audit trail.
+6. Admin can **void** a wrong or duplicate punch, with a required reason. Voiding never deletes it — the record stays visible (marked "Voided," with the reason), it just stops counting toward hours, the calendar's day-state, and exports, and can be reversed with "Unvoid." This keeps the same trust guarantee as the audit trail: a punch that happened is never silently erasable.
 
 ### 6.4 Admin — Monthly Export (Single Employee)
 
