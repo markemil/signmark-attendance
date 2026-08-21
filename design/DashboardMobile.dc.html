@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --success:#15825B; --success-bg:#E3F6ED; --warning:#B4740E; --warning-bg:#FBEDD3; --critical:#C13A34; --critical-bg:#FBE6E4;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .pill{display:inline-flex; align-items:center; gap:4px; font-size:0.62rem; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; padding:3px 8px; border-radius:99px; white-space:nowrap;}
+    .pill-success{background:var(--success-bg); color:var(--success);}
+    .pill-warning{background:var(--warning-bg); color:var(--warning);}
+  </style>
+</helmet>
+
+<div style="width:390px; min-height:760px; background:var(--sky-050); overflow-x:hidden;">
+
+  <div style="padding:16px 18px 6px; font-size:0.64rem; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace;">11 · Dashboard at 390px · overflow check</div>
+
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:14px 18px;">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <div style="width:24px; height:24px; border-radius:6px; background:linear-gradient(135deg, var(--blue-500), var(--navy-900));"></div>
+      <span style="font-weight:800; font-size:0.98rem; color:var(--navy-900);">In-Out</span>
+    </div>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--navy-900)" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </div>
+
+  <div style="padding:0 18px 14px;">
+    <h1 style="font-size:1.15rem; font-weight:800; color:var(--navy-900);">Good morning</h1>
+    <p style="font-size:0.82rem; color:var(--ink-600); margin-top:2px;">142 punches logged this week.</p>
+  </div>
+
+  <!-- stat cards: horizontal scroll within its own container, page never scrolls sideways -->
+  <div style="display:flex; gap:10px; padding:0 18px 16px; overflow-x:auto;">
+    <div style="flex:none; width:150px; background:#fff; border:1px solid var(--ink-300); border-radius:12px; padding:14px;">
+      <div style="font-size:0.7rem; color:var(--ink-600); font-weight:600;">This week</div>
+      <div class="mono" style="font-size:1.3rem; font-weight:500; color:var(--navy-900);">142</div>
+    </div>
+    <div style="flex:none; width:150px; background:#fff; border:1px solid var(--ink-300); border-radius:12px; padding:14px;">
+      <div style="font-size:0.7rem; color:var(--ink-600); font-weight:600;">Ready to export</div>
+      <div class="mono" style="font-size:1.3rem; font-weight:500; color:var(--navy-900);">3</div>
+    </div>
+    <div style="flex:none; width:150px; background:#fff; border:1px solid var(--ink-300); border-radius:12px; padding:14px;">
+      <div style="font-size:0.7rem; color:var(--ink-600); font-weight:600;">Flagged</div>
+      <div class="mono" style="font-size:1.3rem; font-weight:500; color:var(--critical);">1</div>
+    </div>
+  </div>
+
+  <div style="padding:0 18px;">
+    <div style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-600); margin-bottom:8px;">Employees</div>
+
+    <div style="background:#fff; border:1px solid var(--ink-300); border-radius:12px; overflow:hidden;">
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid var(--ink-300);">
+        <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(160deg,#c9d9f5,#8fb0e8); flex:none;"></div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:600; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Jasmine Mercado</div>
+          <div class="mono" style="font-size:0.68rem; color:var(--ink-600);">8:02 AM</div>
+        </div>
+        <span class="pill pill-success">On time</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid var(--ink-300);">
+        <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(160deg,#f5d9c9,#e8a68f); flex:none;"></div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:600; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Ronald Bautista</div>
+          <div class="mono" style="font-size:0.68rem; color:var(--ink-600);">9:41 AM</div>
+        </div>
+        <span class="pill pill-warning">Late</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px;">
+        <div style="width:28px; height:28px; border-radius:50%; background:linear-gradient(160deg,#d9f5df,#8fe0a6); flex:none;"></div>
+        <div style="flex:1; min-width:0;">
+          <div style="font-weight:600; font-size:0.85rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Karla Dizon</div>
+          <div class="mono" style="font-size:0.68rem; color:var(--ink-600);">Aug 18</div>
+        </div>
+        <span class="pill" style="background:var(--critical-bg); color:var(--critical);">Absent</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="height:24px;"></div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

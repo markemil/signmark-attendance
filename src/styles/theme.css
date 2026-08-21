@@ -1,0 +1,161 @@
+/*
+  In-Out — Blue Clarity design tokens.
+  Source of truth: DESIGN.md §2–4. Every component reads these tokens,
+  never a literal hex, so it resolves correctly in all three theme states.
+*/
+
+:root {
+  /* Light (default) */
+  --navy-900: #0b1e39;
+  --blue-700: #154fc0;
+  --blue-500: #2f6fed;
+  --blue-100: #e3ecff;
+  --sky-050: #f5f8ff;
+  --surface: #ffffff;
+  --ink-900: #101828;
+  --ink-600: #4a5568;
+  --ink-300: #d6deeb;
+
+  --success: #15825b;
+  --success-bg: #e3f6ed;
+  --warning: #b4740e;
+  --warning-bg: #fbedd3;
+  --critical: #c13a34;
+  --critical-bg: #fbe6e4;
+  --holiday: var(--blue-500);
+  --holiday-bg: var(--blue-100);
+
+  --focus-ring: var(--blue-500);
+
+  /* Type */
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Spacing (8px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+
+  /* Breakpoints, referenced in comments / JS — CSS media queries below */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-ease: ease-out;
+}
+
+/* Dark — system preference, unless an explicit light choice overrides it */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy-900: #eaf1ff;
+    --blue-700: #8fb4ff;
+    --blue-500: #5b8df6;
+    --blue-100: rgba(91, 141, 246, 0.16);
+    --sky-050: #0a0f1a;
+    --surface: #111826;
+    --ink-900: #eef2f8;
+    --ink-600: #9aa7bd;
+    --ink-300: #243044;
+
+    --success: #4fd3a0;
+    --success-bg: rgba(79, 211, 160, 0.14);
+    --warning: #e3a94a;
+    --warning-bg: rgba(227, 169, 74, 0.14);
+    --critical: #e8746e;
+    --critical-bg: rgba(232, 116, 110, 0.14);
+    --holiday: var(--blue-500);
+    --holiday-bg: var(--blue-100);
+  }
+}
+
+/* Dark — explicit in-app toggle, wins over system preference either direction */
+:root[data-theme="dark"] {
+  --navy-900: #eaf1ff;
+  --blue-700: #8fb4ff;
+  --blue-500: #5b8df6;
+  --blue-100: rgba(91, 141, 246, 0.16);
+  --sky-050: #0a0f1a;
+  --surface: #111826;
+  --ink-900: #eef2f8;
+  --ink-600: #9aa7bd;
+  --ink-300: #243044;
+
+  --success: #4fd3a0;
+  --success-bg: rgba(79, 211, 160, 0.14);
+  --warning: #e3a94a;
+  --warning-bg: rgba(227, 169, 74, 0.14);
+  --critical: #e8746e;
+  --critical-bg: rgba(232, 116, 110, 0.14);
+  --holiday: var(--blue-500);
+  --holiday-bg: var(--blue-100);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--sky-050);
+  color: var(--ink-900);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  max-width: 65ch;
+}
+
+a {
+  color: var(--blue-700);
+}
+
+a:hover {
+  color: var(--navy-900);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

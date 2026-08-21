@@ -1,0 +1,133 @@
+/* Shared component classes — Blue Clarity, DESIGN.md §5 */
+
+.btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  padding: 14px 22px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  transition: background var(--motion-fast) var(--motion-ease);
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--blue-500);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--blue-700);
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--navy-900);
+  border: 1.5px solid var(--navy-900);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--blue-700);
+  padding: 10px 14px;
+  min-height: auto;
+}
+.btn-block {
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-600);
+}
+.input {
+  width: 100%;
+  border: 1.5px solid var(--ink-300);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--surface);
+  min-height: 44px;
+}
+.input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--blue-500);
+}
+.error-text {
+  color: var(--critical);
+  font-size: 0.85rem;
+}
+.field-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--critical-bg);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--ink-300);
+  border-radius: var(--radius-lg);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.pill-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.pill-critical {
+  background: var(--critical-bg);
+  color: var(--critical);
+}
+.pill-holiday {
+  background: var(--holiday-bg);
+  color: var(--holiday);
+}
+
+.page-mobile {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-desktop {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+}

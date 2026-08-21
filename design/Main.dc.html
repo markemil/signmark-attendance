@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --success:#15825B; --success-bg:#E3F6ED; --warning:#B4740E; --warning-bg:#FBEDD3; --critical:#C13A34; --critical-bg:#FBE6E4;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .pill{display:inline-flex; align-items:center; gap:4px; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; padding:4px 9px; border-radius:99px; white-space:nowrap;}
+    .pill-success{background:var(--success-bg); color:var(--success);}
+    .pill-warning{background:var(--warning-bg); color:var(--warning);}
+    .pill-critical{background:var(--critical-bg); color:var(--critical);}
+    .navitem{display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.7); cursor:pointer;}
+    .navitem.active{background:rgba(255,255,255,0.1); color:#fff;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:10px; padding:11px 18px; font-weight:700; font-size:0.88rem; cursor:pointer;}
+    .searchbox{border:1.5px solid var(--ink-300); border-radius:10px; padding:10px 14px; font-size:0.88rem; background:#fff; width:280px;}
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:820px; background:var(--sky-050); display:flex; font-size:0.9rem;">
+
+  <!-- Nav rail -->
+  <div style="width:220px; background:var(--navy-900); padding:20px 14px; display:flex; flex-direction:column; gap:4px; flex:none;">
+    <div style="display:flex; align-items:center; gap:10px; padding:6px 10px 22px;">
+      <div style="width:26px; height:26px; border-radius:7px; background:linear-gradient(135deg, var(--blue-500), #fff);"></div>
+      <span style="color:#fff; font-weight:800; font-size:1.05rem;">In-Out</span>
+    </div>
+    <div class="navitem active">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+      Dashboard
+    </div>
+    <div class="navitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+      Calendars
+    </div>
+    <div class="navitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 6.8L22 10l-6 4.6L17.5 22 12 17.8 6.5 22 8 14.6 2 10l7.6-1.2z"/></svg>
+      Holidays
+    </div>
+    <div class="navitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Exports
+    </div>
+    <div class="navitem">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Employees
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div style="flex:1; padding:28px 36px;">
+
+    <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace; margin-bottom:14px;">05 · Dashboard · 1280px</div>
+
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:26px;">
+      <div>
+        <h1 style="font-size:1.5rem; font-weight:800; color:var(--navy-900);">Good morning, Admin</h1>
+        <p style="color:var(--ink-600); font-size:0.9rem; margin-top:4px;">Here's how attendance looks across the team.</p>
+      </div>
+      <button class="btn-primary">+ Add Employee</button>
+    </div>
+
+    <!-- Outcome stats -->
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:28px;">
+      <div style="background:#fff; border:1px solid var(--ink-300); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.78rem; color:var(--ink-600); font-weight:600;">Punches logged this week</div>
+        <div style="font-family:'DM Mono',monospace; font-size:1.7rem; font-weight:500; color:var(--navy-900); margin-top:6px;">142</div>
+      </div>
+      <div style="background:#fff; border:1px solid var(--ink-300); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.78rem; color:var(--ink-600); font-weight:600;">Ready to export</div>
+        <div style="font-family:'DM Mono',monospace; font-size:1.7rem; font-weight:500; color:var(--navy-900); margin-top:6px;">3 employees</div>
+      </div>
+      <div style="background:#fff; border:1px solid var(--ink-300); border-radius:14px; padding:18px 20px;">
+        <div style="font-size:0.78rem; color:var(--ink-600); font-weight:600;">Flagged for review</div>
+        <div style="font-family:'DM Mono',monospace; font-size:1.7rem; font-weight:500; color:var(--critical); margin-top:6px;">1 record</div>
+      </div>
+    </div>
+
+    <!-- Employee list -->
+    <div style="background:#fff; border:1px solid var(--ink-300); border-radius:16px; overflow:hidden;">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--ink-300);">
+        <h2 style="font-size:1rem; font-weight:700;">Employees</h2>
+        <input class="searchbox" placeholder="Search by name or code" readonly>
+      </div>
+
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr 40px; padding:10px 20px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-600); border-bottom:1px solid var(--ink-300);">
+        <div>Employee</div><div>Department</div><div>Today</div><div>Last punch</div><div></div>
+      </div>
+
+      <!-- Row 1 -->
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr 40px; align-items:center; padding:13px 20px; border-bottom:1px solid var(--ink-300);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(160deg,#c9d9f5,#8fb0e8);"></div>
+          <div><div style="font-weight:600;">Jasmine Mercado</div><div class="mono" style="font-size:0.72rem; color:var(--ink-600);">EMP-0142</div></div>
+        </div>
+        <div style="color:var(--ink-600);">Production</div>
+        <div><span class="pill pill-success">On time</span></div>
+        <div class="mono" style="color:var(--ink-600); font-size:0.82rem;">8:02 AM</div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+      </div>
+
+      <!-- Row 2 -->
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr 40px; align-items:center; padding:13px 20px; border-bottom:1px solid var(--ink-300);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(160deg,#f5d9c9,#e8a68f);"></div>
+          <div><div style="font-weight:600;">Ronald Bautista</div><div class="mono" style="font-size:0.72rem; color:var(--ink-600);">EMP-0108</div></div>
+        </div>
+        <div style="color:var(--ink-600);">Warehouse</div>
+        <div><span class="pill pill-warning">Late</span></div>
+        <div class="mono" style="color:var(--ink-600); font-size:0.82rem;">9:41 AM</div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+      </div>
+
+      <!-- Row 3 -->
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr 40px; align-items:center; padding:13px 20px; border-bottom:1px solid var(--ink-300);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(160deg,#d9f5df,#8fe0a6);"></div>
+          <div><div style="font-weight:600;">Karla Dizon</div><div class="mono" style="font-size:0.72rem; color:var(--ink-600);">EMP-0091</div></div>
+        </div>
+        <div style="color:var(--ink-600);">Night shift</div>
+        <div><span class="pill pill-critical">Absent</span></div>
+        <div class="mono" style="color:var(--ink-600); font-size:0.82rem;">Aug 18, 6:04 AM</div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+      </div>
+
+      <!-- Row 4 -->
+      <div style="display:grid; grid-template-columns:2fr 1fr 1fr 1fr 40px; align-items:center; padding:13px 20px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:32px; height:32px; border-radius:50%; background:linear-gradient(160deg,#e3d9f5,#b08fe0);"></div>
+          <div><div style="font-weight:600;">Miguel Santos</div><div class="mono" style="font-size:0.72rem; color:var(--ink-600);">EMP-0075</div></div>
+        </div>
+        <div style="color:var(--ink-600);">Production</div>
+        <div><span class="pill pill-success">On time</span></div>
+        <div class="mono" style="color:var(--ink-600); font-size:0.82rem;">7:58 AM</div>
+        <div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --critical:#C13A34; --critical-bg:#FBE6E4;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    a{color:var(--blue-700);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .input{width:100%; border:1.5px solid var(--ink-300); border-radius:10px; padding:14px; font-size:0.95rem; font-family:"Manrope"; color:var(--ink-900); background:#fff;}
+    .input:focus{outline:3px solid var(--blue-100); border-color:var(--blue-500);}
+    .label{font-size:0.78rem; font-weight:700; color:var(--ink-600); margin-bottom:6px; display:block;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:12px; padding:15px 22px; font-weight:700; font-size:0.98rem; width:100%; cursor:pointer;}
+    .btn-primary:hover{background:var(--blue-700);}
+  </style>
+</helmet>
+
+<div style="width:390px; min-height:760px; background:var(--sky-050); display:flex; flex-direction:column;">
+
+  <div style="padding:16px 20px 6px; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace;">01 · Login · 390px</div>
+
+  <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:32px 28px;">
+
+    <div style="display:flex; flex-direction:column; align-items:flex-start; gap:6px; margin-bottom:40px;">
+      <div style="width:36px; height:36px; border-radius:9px; background:linear-gradient(135deg, var(--blue-500), var(--navy-900));"></div>
+      <h1 style="font-size:1.5rem; font-weight:800; color:var(--navy-900); margin-top:14px;">In-Out</h1>
+      <p style="font-size:0.92rem; color:var(--ink-600);">Sign in to clock in or out.</p>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label class="label">Username</label>
+        <input class="input" type="text" value="jmercado" readonly>
+      </div>
+      <div>
+        <label class="label">Password</label>
+        <input class="input" type="password" value="••••••••" readonly>
+      </div>
+
+      <div style="display:flex; align-items:flex-start; gap:8px; background:var(--critical-bg); border-radius:10px; padding:12px 14px;">
+        <div style="width:16px; height:16px; border-radius:50%; background:var(--critical); flex:none; margin-top:2px; display:flex; align-items:center; justify-content:center;">
+          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="8" x2="12" y2="14"/><circle cx="12" cy="17.5" r="0.5" fill="white" stroke="none"/></svg>
+        </div>
+        <p style="font-size:0.82rem; color:var(--critical); line-height:1.4;">Incorrect username or password. Try again, or ask your admin to reset it.</p>
+      </div>
+
+      <button class="btn-primary" style="margin-top:6px;">Sign in</button>
+    </div>
+  </div>
+
+  <div style="padding:18px 28px 28px; text-align:center;">
+    <p style="font-size:0.78rem; color:var(--ink-600);">Forgot your login? Ask your admin — accounts are set up by them, not self-registered.</p>
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --success:#15825B; --success-bg:#E3F6ED;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:12px; padding:16px; font-weight:700; font-size:0.98rem; width:100%; cursor:pointer;}
+    .btn-primary:hover{background:var(--blue-700);}
+  </style>
+</helmet>
+
+<div style="width:390px; min-height:760px; background:var(--sky-050); display:flex; flex-direction:column;">
+
+  <div style="padding:16px 20px 6px; font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace;">04 · Confirmation · 390px</div>
+
+  <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:28px;">
+
+    <div style="width:56px; height:56px; border-radius:50%; background:var(--success-bg); display:flex; align-items:center; justify-content:center; margin-bottom:18px;">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15825B" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+
+    <h1 style="font-size:1.3rem; font-weight:800; color:var(--navy-900); margin-bottom:4px;">Clocked out</h1>
+    <p style="font-size:0.88rem; color:var(--ink-600); margin-bottom:28px;">Your photo and time have been recorded.</p>
+
+    <div style="width:100%; background:var(--surface); border:1px solid var(--ink-300); border-radius:18px; padding:20px; display:flex; flex-direction:column; align-items:center; gap:16px;">
+      <div style="width:120px; height:150px; border-radius:14px; background:linear-gradient(160deg,#c9d9f5,#8fb0e8); border:3px solid #fff; box-shadow:0 2px 10px rgba(11,30,57,0.12);"></div>
+
+      <div style="display:flex; align-items:center; gap:8px; background:var(--blue-100); color:var(--blue-700); font-size:0.68rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; padding:5px 11px; border-radius:99px;">
+        OUT
+      </div>
+      <div class="mono" style="font-size:1.6rem; font-weight:500; color:var(--navy-900);">10:16 AM</div>
+
+      <div style="width:100%; border-top:1px solid var(--ink-300); padding-top:14px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.82rem; color:var(--ink-600);">Total this shift</span>
+        <span class="mono" style="font-size:0.95rem; font-weight:600; color:var(--navy-900);">2h 14m</span>
+      </div>
+    </div>
+
+    <button class="btn-primary" style="margin-top:28px;">Done</button>
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

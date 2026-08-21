@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --success:#15825B; --success-bg:#E3F6ED; --warning:#B4740E; --warning-bg:#FBEDD3; --critical:#C13A34; --critical-bg:#FBE6E4;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .pill{display:inline-flex; align-items:center; gap:3px; font-size:0.6rem; font-weight:700; letter-spacing:0.02em; text-transform:uppercase; padding:2px 6px; border-radius:99px; white-space:nowrap;}
+    .pill-success{background:var(--success-bg); color:var(--success);}
+    .pill-holiday{background:var(--blue-100); color:var(--blue-700);}
+    .daycell{background:#fff; border:1px solid var(--ink-300); border-radius:10px; padding:8px; min-height:92px; display:flex; flex-direction:column; gap:5px;}
+    .daynum{font-size:0.72rem; font-weight:700; color:var(--ink-600);}
+    .thumb{width:20px; height:20px; border-radius:5px; background:linear-gradient(160deg,#c9d9f5,#8fb0e8); flex:none;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:10px; padding:10px 16px; font-weight:700; font-size:0.85rem; cursor:pointer;}
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:900px; background:var(--sky-050); padding:28px 36px; font-size:0.9rem;">
+
+  <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace; margin-bottom:14px;">06 · Employee Calendar · 1280px</div>
+
+  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="width:44px; height:44px; border-radius:50%; background:linear-gradient(160deg,#c9d9f5,#8fb0e8);"></div>
+      <div>
+        <h1 style="font-size:1.25rem; font-weight:800; color:var(--navy-900);">Jasmine Mercado</h1>
+        <p style="color:var(--ink-600); font-size:0.85rem;">EMP-0142 · Production</p>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div style="display:flex; align-items:center; gap:10px; font-weight:700; color:var(--navy-900);">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        August 2026
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <button class="btn-primary">Export month</button>
+    </div>
+  </div>
+
+  <!-- weekday header -->
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-bottom:8px;">
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">MON</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">TUE</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">WED</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">THU</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">FRI</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">SAT</div>
+    <div class="mono" style="font-size:0.7rem; color:var(--ink-600); text-align:center;">SUN</div>
+  </div>
+
+  <!-- week 1 -->
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-bottom:10px;">
+    <div class="daycell"><span class="daynum">3</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:00</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell"><span class="daynum">4</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:04</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell" style="background:var(--critical-bg); border-color:transparent;"><span class="daynum" style="color:var(--critical);">5</span><span class="pill" style="background:var(--critical); color:#fff; margin-top:auto;">Absent</span></div>
+    <div class="daycell"><span class="daynum">6</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">7:55</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell"><span class="daynum">7</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:11</span></div><span class="pill" style="background:var(--warning-bg); color:var(--warning);">Late</span></div>
+    <div class="daycell" style="background:var(--blue-100); border-color:transparent;"><span class="daynum" style="color:var(--blue-700);">8</span><span class="pill pill-holiday" style="margin-top:auto;">Holiday</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">9</span></div>
+  </div>
+
+  <!-- week 2 -->
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-bottom:10px;">
+    <div class="daycell"><span class="daynum">10</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:01</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell"><span class="daynum">11</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">7:59</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell"><span class="daynum">12</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:03</span></div><span class="pill pill-success">On time</span></div>
+    <!-- Holiday + Worked (split pill) -->
+    <div class="daycell" style="background:linear-gradient(90deg,var(--blue-100) 50%, var(--success-bg) 50%); border-color:transparent;">
+      <span class="daynum" style="color:var(--navy-900);">13</span>
+      <div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">9:12</span></div>
+      <span class="pill" style="background:linear-gradient(90deg,var(--blue-500) 50%, var(--success) 50%); color:#fff; margin-top:auto;">Holiday · Worked</span>
+    </div>
+    <div class="daycell"><span class="daynum">14</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">7:57</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell"><span class="daynum">15</span><div style="display:flex; align-items:center; gap:5px;"><div class="thumb"></div><span class="mono" style="font-size:0.65rem;">8:05</span></div><span class="pill pill-success">On time</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">16</span></div>
+  </div>
+
+  <!-- week 3 (future/blank) -->
+  <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-bottom:20px;">
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">17</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">18</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">19</span></div>
+    <div class="daycell" style="background:transparent; border:1.5px dashed var(--blue-300, var(--ink-300)); box-shadow:none;"><span class="daynum" style="color:var(--blue-700); font-weight:800;">20</span><span style="font-size:0.6rem; color:var(--blue-700); margin-top:auto;">Today</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">21</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">22</span></div>
+    <div class="daycell" style="background:transparent; border:none; box-shadow:none;"><span class="daynum" style="color:var(--ink-300);">23</span></div>
+  </div>
+
+  <!-- legend -->
+  <div style="display:flex; align-items:center; gap:18px; padding:14px 18px; background:#fff; border:1px solid var(--ink-300); border-radius:12px;">
+    <span style="font-size:0.72rem; font-weight:700; color:var(--ink-600); text-transform:uppercase; letter-spacing:0.04em;">Legend</span>
+    <span class="pill pill-success">On time</span>
+    <span class="pill" style="background:var(--warning-bg); color:var(--warning);">Late</span>
+    <span class="pill" style="background:var(--critical); color:#fff;">Absent</span>
+    <span class="pill pill-holiday">Holiday</span>
+    <span class="pill" style="background:linear-gradient(90deg,var(--blue-500) 50%, var(--success) 50%); color:#fff;">Holiday · Worked</span>
+    <span style="font-size:0.72rem; color:var(--ink-600);">Blank = not yet occurred</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

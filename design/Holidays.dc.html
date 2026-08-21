@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:10px; padding:11px 18px; font-weight:700; font-size:0.85rem; cursor:pointer;}
+    .row{display:grid; grid-template-columns:140px 1fr 90px; align-items:center; padding:14px 20px; border-bottom:1px solid var(--ink-300);}
+    .icon-btn{width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:760px; background:var(--sky-050); padding:28px 36px; font-size:0.9rem;">
+
+  <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace; margin-bottom:14px;">09 · Holiday Management · 1280px</div>
+
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px;">
+    <div>
+      <h1 style="font-size:1.4rem; font-weight:800; color:var(--navy-900);">Holidays</h1>
+      <p style="color:var(--ink-600); font-size:0.85rem; margin-top:4px; max-width:520px;">Org-wide — marking a date here applies to every employee's calendar. There's no per-employee setup.</p>
+    </div>
+    <button class="btn-primary">+ Add holiday</button>
+  </div>
+
+  <div style="background:#fff; border:1px solid var(--ink-300); border-radius:16px; overflow:hidden; margin-top:20px; max-width:760px;">
+
+    <div class="row" style="font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--ink-600); background:var(--sky-050);">
+      <div>Date</div><div>Label</div><div></div>
+    </div>
+
+    <div class="row">
+      <div class="mono" style="color:var(--ink-600);">2026-01-01</div>
+      <div style="font-weight:600;">New Year's Day</div>
+      <div style="display:flex; gap:6px; justify-content:flex-end;">
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--critical)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="mono" style="color:var(--ink-600);">2026-04-09</div>
+      <div style="font-weight:600;">Araw ng Kagitingan</div>
+      <div style="display:flex; gap:6px; justify-content:flex-end;">
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--critical)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="mono" style="color:var(--ink-600);">2026-08-13</div>
+      <div style="font-weight:600;">Founding Day</div>
+      <div style="display:flex; gap:6px; justify-content:flex-end;">
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--critical)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></span>
+      </div>
+    </div>
+
+    <div class="row" style="border-bottom:none;">
+      <div class="mono" style="color:var(--ink-600);">2026-12-25</div>
+      <div style="font-weight:600;">Christmas Day</div>
+      <div style="display:flex; gap:6px; justify-content:flex-end;">
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--ink-600)" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg></span>
+        <span class="icon-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--critical)" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

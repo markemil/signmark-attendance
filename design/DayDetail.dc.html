@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    :root{
+      --navy-900:#0B1E39; --blue-700:#154FC0; --blue-500:#2F6FED; --blue-100:#E3ECFF; --sky-050:#F5F8FF;
+      --surface:#FFFFFF; --ink-900:#101828; --ink-600:#4A5568; --ink-300:#D6DEEB;
+      --success:#15825B; --success-bg:#E3F6ED; --warning:#B4740E; --warning-bg:#FBEDD3;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;}
+    body{font-family:"Manrope",ui-sans-serif,system-ui,sans-serif; background:var(--sky-050); color:var(--ink-900);}
+    .mono{font-family:"DM Mono",ui-monospace,Menlo,monospace;}
+    .pill{display:inline-flex; align-items:center; gap:4px; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; text-transform:uppercase; padding:4px 9px; border-radius:99px;}
+    .btn-primary{background:var(--blue-500); color:#fff; border:none; border-radius:10px; padding:11px 18px; font-weight:700; font-size:0.85rem; cursor:pointer;}
+    .btn-ghost{background:transparent; color:var(--blue-700); border:none; font-weight:700; font-size:0.85rem; cursor:pointer;}
+    .card{background:#fff; border:1px solid var(--ink-300); border-radius:14px;}
+    .textarea{width:100%; border:1.5px solid var(--ink-300); border-radius:10px; padding:12px; font-family:"Manrope"; font-size:0.85rem; color:var(--ink-600); resize:none;}
+  </style>
+</helmet>
+
+<div style="width:1280px; min-height:820px; background:var(--sky-050); padding:28px 36px; font-size:0.9rem;">
+
+  <div style="font-size:0.68rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:var(--blue-700); font-family:'DM Mono',monospace; margin-bottom:14px;">07 · Day Detail · 1280px</div>
+
+  <div style="display:flex; align-items:center; gap:8px; color:var(--ink-600); font-size:0.85rem; margin-bottom:16px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Back to Jasmine Mercado's calendar — <span class="mono">Aug 13, 2026</span>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1.1fr 1.4fr; gap:24px;">
+
+    <!-- left: events -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+
+      <div class="card" style="padding:18px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+          <span class="pill" style="background:var(--blue-100); color:var(--blue-700);">IN</span>
+          <span class="pill" style="background:var(--warning-bg); color:var(--warning);">Late</span>
+        </div>
+        <div style="display:flex; gap:14px;">
+          <div style="width:96px; height:120px; border-radius:12px; background:linear-gradient(160deg,#c9d9f5,#8fb0e8); flex:none;"></div>
+          <div style="display:flex; flex-direction:column; gap:8px; justify-content:center;">
+            <div class="mono" style="font-size:1.5rem; font-weight:500; color:var(--navy-900);">9:12 AM</div>
+            <div style="font-size:0.78rem; color:var(--ink-600);">Device: iPhone · Chrome mobile</div>
+            <div style="font-size:0.78rem; color:var(--ink-600);">Source: Employee (photo-verified)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:18px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+          <span class="pill" style="background:var(--blue-100); color:var(--blue-700);">OUT</span>
+          <span class="pill" style="background:var(--success-bg); color:var(--success);">On time</span>
+        </div>
+        <div style="display:flex; gap:14px;">
+          <div style="width:96px; height:120px; border-radius:12px; background:linear-gradient(160deg,#d9c9f5,#a68fe8); flex:none;"></div>
+          <div style="display:flex; flex-direction:column; gap:8px; justify-content:center;">
+            <div class="mono" style="font-size:1.5rem; font-weight:500; color:var(--navy-900);">6:03 PM</div>
+            <div style="font-size:0.78rem; color:var(--ink-600);">Device: iPhone · Chrome mobile</div>
+            <div style="font-size:0.78rem; color:var(--ink-600);">Source: Employee (photo-verified)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:16px 18px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:0.85rem; color:var(--ink-600); font-weight:600;">Total hours worked</span>
+        <span class="mono" style="font-size:1.1rem; font-weight:600; color:var(--navy-900);">8h 51m</span>
+      </div>
+    </div>
+
+    <!-- right: audit / edit -->
+    <div class="card" style="padding:22px;">
+      <h2 style="font-size:1rem; font-weight:700; margin-bottom:4px;">Review & audit</h2>
+      <p style="font-size:0.82rem; color:var(--ink-600); margin-bottom:18px;">Marked <span class="pill" style="background:var(--blue-100); color:var(--blue-700);">Holiday · Worked</span> — Founding Day.</p>
+
+      <div style="border-top:1px solid var(--ink-300); padding-top:16px; margin-bottom:16px;">
+        <div style="font-size:0.78rem; font-weight:700; color:var(--ink-600); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:10px;">Audit trail</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; gap:10px; font-size:0.82rem;">
+            <span class="mono" style="color:var(--ink-600); flex:none; width:90px;">Aug 13, 9:12 AM</span>
+            <span>Employee clocked IN — photo captured, original entry.</span>
+          </div>
+          <div style="display:flex; gap:10px; font-size:0.82rem;">
+            <span class="mono" style="color:var(--ink-600); flex:none; width:90px;">Aug 13, 6:03 PM</span>
+            <span>Employee clocked OUT — photo captured, original entry.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--ink-300); padding-top:16px;">
+        <label style="font-size:0.78rem; font-weight:700; color:var(--ink-600); display:block; margin-bottom:8px;">Add audit note</label>
+        <textarea class="textarea" rows="3" readonly>e.g. "Confirmed with employee — Founding Day shift approved by supervisor."</textarea>
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button class="btn-primary">Save note</button>
+          <button class="btn-ghost">Correct this record</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

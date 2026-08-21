@@ -1,0 +1,118 @@
+{
+  "artboards": [
+    { "file": "Login.dc.html", "x": 0, "y": 0, "w": 390, "h": 800, "title": "01 · Login" },
+    {
+      "file": "ClockHome.dc.html",
+      "x": 460,
+      "y": 0,
+      "w": 390,
+      "h": 800,
+      "title": "02 · Home / Clock"
+    },
+    {
+      "file": "CameraCapture.dc.html",
+      "x": 920,
+      "y": 0,
+      "w": 390,
+      "h": 800,
+      "title": "03 · Camera Capture"
+    },
+    {
+      "file": "Confirmation.dc.html",
+      "x": 1380,
+      "y": 0,
+      "w": 390,
+      "h": 800,
+      "title": "04 · Confirmation"
+    },
+    {
+      "file": "DashboardMobile.dc.html",
+      "x": 1840,
+      "y": 0,
+      "w": 390,
+      "h": 800,
+      "title": "11 · Dashboard @ 390px"
+    },
+
+    {
+      "file": "Main.dc.html",
+      "x": 0,
+      "y": 900,
+      "w": 1280,
+      "h": 860,
+      "title": "05 · Admin Dashboard"
+    },
+    {
+      "file": "Calendar.dc.html",
+      "x": 1360,
+      "y": 900,
+      "w": 1280,
+      "h": 940,
+      "title": "06 · Employee Calendar"
+    },
+    {
+      "file": "DayDetail.dc.html",
+      "x": 2720,
+      "y": 900,
+      "w": 1280,
+      "h": 860,
+      "title": "07 · Day Detail"
+    },
+
+    {
+      "file": "ManualPunch.dc.html",
+      "x": 0,
+      "y": 1940,
+      "w": 1280,
+      "h": 860,
+      "title": "08 · Admin Manual Punch"
+    },
+    {
+      "file": "Holidays.dc.html",
+      "x": 1360,
+      "y": 1940,
+      "w": 1280,
+      "h": 800,
+      "title": "09 · Holiday Management"
+    },
+    {
+      "file": "ExportModal.dc.html",
+      "x": 2720,
+      "y": 1940,
+      "w": 1280,
+      "h": 800,
+      "title": "10 · Export Modal"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "note-employee-flow",
+      "x": 0,
+      "y": -110,
+      "w": 700,
+      "text": "EMPLOYEE FLOW — 390px, mobile-first\nLogin → Clock Home → Camera Capture → Confirmation. Own-phone use, no kiosk."
+    },
+    {
+      "id": "note-mobile-admin",
+      "x": 1840,
+      "y": -110,
+      "w": 390,
+      "text": "MOBILE OVERFLOW CHECK\nAdmin dashboard degrades to 390px — stat cards scroll in their own row, page never scrolls sideways."
+    },
+    {
+      "id": "note-admin-flow",
+      "x": 0,
+      "y": 800,
+      "w": 700,
+      "text": "ADMIN FLOW — 1280px desktop\nDashboard → Calendar (all 5 day-cell states) → Day Detail with audit trail."
+    },
+    {
+      "id": "note-admin-actions",
+      "x": 0,
+      "y": 1840,
+      "w": 700,
+      "text": "ADMIN ACTIONS\nManual punch (required reason note, no photo) · Holidays (org-wide) · Single-employee export."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}
