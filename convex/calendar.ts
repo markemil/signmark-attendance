@@ -2,6 +2,7 @@ import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { requireAdmin } from "./lib/authz";
 import { businessDateOf } from "./lib/shiftDate";
+import { rollupDays } from "./lib/dayRollup";
 
 function daysInMonth(year: number, month: number): number {
   return new Date(Date.UTC(year, month, 0)).getUTCDate();
@@ -73,34 +74,20 @@ export const getEmployeeCalendar = query({
       .collect();
     const holidayByDate = new Map(holidays.map((h) => [h.date, h.name]));
 
-    const days = [];
-    for (let d = 1; d <= lastDay; d++) {
-      const date = `${args.year}-${pad2(args.month)}-${pad2(d)}`;
-      const dayEvents = (eventsByDate.get(date) ?? []).sort((a, b) => a.timestamp - b.timestamp);
-      const holidayName = holidayByDate.get(date);
-      const worked = dayEvents.length > 0;
+    const dates: string[] = [];
+    for (let d = 1; d <= lastDay; d++) dates.push(`${args.year}-${pad2(args.month)}-${pad2(d)}`);
 
-      let state: "worked" | "holiday" | "holiday_worked" | "absent" | "blank";
-      if (worked && holidayName) state = "holiday_worked";
-      else if (worked) state = "worked";
-      else if (holidayName) state = "holiday";
-      else if (date > today) state = "blank";
-      else state = "absent";
-
-      days.push({
-        date,
-        state,
-        holidayName,
-        events: dayEvents.map((e) => ({
-          type: e.type,
-          timestamp: e.timestamp,
-          status: e.status,
-          source: e.source,
-        })),
-      });
-    }
-
-    return days;
+    return rollupDays(dates, eventsByDate, holidayByDate, today).map((day) => ({
+      date: day.date,
+      state: day.state,
+      holidayName: day.holidayName,
+      events: day.events.map((e) => ({
+        type: e.type,
+        timestamp: e.timestamp,
+        status: e.status,
+        source: e.source,
+      })),
+    }));
   },
 });
 

@@ -5,6 +5,7 @@ import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { useAuth } from "../hooks/useAuth";
 import { AdminNav } from "../components/AdminNav";
+import { ExportModal } from "../components/ExportModal";
 
 const WEEKDAYS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 const MONTH_NAMES = [
@@ -59,6 +60,7 @@ export function AdminCalendar() {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth() + 1); // 1-12
+  const [showExport, setShowExport] = useState(false);
 
   const employee = useQuery(
     api.employees.getEmployee,
@@ -163,8 +165,21 @@ export function AdminCalendar() {
             <button className="btn btn-ghost" onClick={nextMonth} aria-label="Next month">
               →
             </button>
+            <button className="btn btn-primary" onClick={() => setShowExport(true)}>
+              Export
+            </button>
           </div>
         </div>
+
+        {showExport && employeeId && (
+          <ExportModal
+            employeeId={employeeId as Id<"employees">}
+            employeeName={employee?.fullName ?? "this employee"}
+            year={year}
+            month={month}
+            onClose={() => setShowExport(false)}
+          />
+        )}
 
         <div
           style={{
