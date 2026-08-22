@@ -172,15 +172,29 @@ export function EmployeeHome() {
                       gap: 12,
                     }}
                   >
-                    <div
-                      style={{
-                        width: 38,
-                        height: 38,
-                        borderRadius: 9,
-                        background: "var(--blue-100)",
-                        flex: "none",
-                      }}
-                    />
+                    {e.photoUrl ? (
+                      <img
+                        src={e.photoUrl}
+                        alt=""
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: 9,
+                          objectFit: "cover",
+                          flex: "none",
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 38,
+                          height: 38,
+                          borderRadius: 9,
+                          background: "var(--blue-100)",
+                          flex: "none",
+                        }}
+                      />
+                    )}
                     <div style={{ flex: 1 }}>
                       <div style={{ fontSize: "0.85rem", fontWeight: 600 }}>
                         Clocked {e.type === "IN" ? "In" : "Out"}

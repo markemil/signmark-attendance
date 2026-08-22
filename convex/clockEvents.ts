@@ -209,6 +209,7 @@ export const myStatus = query({
           v.literal("early"),
           v.literal("flagged"),
         ),
+        photoUrl: v.union(v.string(), v.null()),
       }),
     ),
   }),
@@ -229,16 +230,28 @@ export const myStatus = query({
     ).filter((e) => !e.voidedAt);
     events.sort((a, b) => a.timestamp - b.timestamp);
 
+    const eventsWithPhotos = await Promise.all(
+      events.map(async (e) => {
+        let photoUrl: string | null = null;
+        if (e.photoId) {
+          const photo = await ctx.db.get(e.photoId);
+          if (photo) photoUrl = await ctx.storage.getUrl(photo.storageId);
+        }
+        return {
+          _id: e._id,
+          type: e.type,
+          timestamp: e.timestamp,
+          status: e.status,
+          photoUrl,
+        };
+      }),
+    );
+
     return {
       openSince: openIn ? openIn.timestamp : null,
       shiftDate,
       totalHoursSoFar: computeTotalHours(events),
-      events: events.map((e) => ({
-        _id: e._id,
-        type: e.type,
-        timestamp: e.timestamp,
-        status: e.status,
-      })),
+      events: eventsWithPhotos,
     };
   },
 });
