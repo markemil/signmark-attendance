@@ -27,6 +27,8 @@ export function EmployeeHome() {
     return () => clearInterval(id);
   }, [status?.openSince]);
 
+  const [viewingPhoto, setViewingPhoto] = useState<string | null>(null);
+
   const isOpen = !!status?.openSince;
 
   return (
@@ -175,13 +177,15 @@ export function EmployeeHome() {
                     {e.photoUrl ? (
                       <img
                         src={e.photoUrl}
-                        alt=""
+                        alt="Tap to view full-size"
+                        onClick={() => setViewingPhoto(e.photoUrl)}
                         style={{
                           width: 38,
                           height: 38,
                           borderRadius: 9,
                           objectFit: "cover",
                           flex: "none",
+                          cursor: "pointer",
                         }}
                       />
                     ) : (
@@ -231,6 +235,53 @@ export function EmployeeHome() {
           </>
         )}
       </div>
+
+      {viewingPhoto && (
+        <div
+          onClick={() => setViewingPhoto(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(11,30,57,0.85)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 24,
+            zIndex: 50,
+          }}
+        >
+          <button
+            onClick={() => setViewingPhoto(null)}
+            aria-label="Close"
+            style={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              background: "rgba(255,255,255,0.14)",
+              border: "none",
+              borderRadius: "50%",
+              width: 40,
+              height: 40,
+              color: "#fff",
+              fontSize: "1.1rem",
+              cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
+          <img
+            src={viewingPhoto}
+            alt="Clock-in/out photo, full size"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              borderRadius: 14,
+              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+            }}
+          />
+        </div>
+      )}
     </main>
   );
 }
